@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { poppins } from '@/fonts';
+import Header from '@/components/Header.tsx';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -16,6 +17,7 @@ export default function AuthLayout({
       className={`${poppins.variable}`}
       style={{ fontFamily: 'var(--primary-font)' }}
     >
+      <Header />
       {children}
     </div>
   );
