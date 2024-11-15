@@ -17,7 +17,7 @@ const Header = () => {
           {routesConfig.map(
             (route) =>
               route.showInMenu && (
-                <li>
+                <li key={route.url}>
                   <Link
                     key={route.title}
                     href={route.url}
