@@ -2,11 +2,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { routes } from '@/routes';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState<true | false | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { push } = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -31,6 +34,8 @@ const SignUpPage = () => {
         setError(true);
         return;
       }
+
+      push(routes.login);
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -76,7 +81,7 @@ const SignUpPage = () => {
         <p>
           Have an account?
           <Link href={routes.login}>
-            <span className='text-blue-500 px-2 underline'>Sign in</span>
+            <span className='text-blue-500 px-2 underline'>Login</span>
           </Link>
         </p>
       </div>
