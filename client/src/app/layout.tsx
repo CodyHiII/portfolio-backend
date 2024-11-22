@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { poppins } from '@/fonts';
-import Header from '@/components/Header.tsx';
+import Providers from './Providers';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -15,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${poppins.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

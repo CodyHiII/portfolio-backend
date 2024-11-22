@@ -1,16 +1,21 @@
 'use client';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useRouter } from 'next/navigation';
 import { routes } from '@/routes';
+import { logInLoading, logInSuccess, logInError } from '@/store/user/slice';
+import { userLoadingSelector, userErrorSelector } from '@/store/user/selectors';
 
 const LogInPage = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState<true | false | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const { push } = useRouter();
+  const dispatch = useDispatch();
+
+  const loading = useSelector(userLoadingSelector);
+  const error = useSelector(userErrorSelector);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -20,8 +25,8 @@ const LogInPage = () => {
     e.preventDefault();
 
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(logInLoading());
+      dispatch(logInError(null));
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -30,15 +35,14 @@ const LogInPage = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setLoading(false);
       if (data.success === false) {
-        setError(true);
+        dispatch(logInError(data));
         return;
       }
+      dispatch(logInSuccess(data));
       push(routes.home);
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      dispatch(logInError(error));
     }
   };
 
@@ -78,7 +82,11 @@ const LogInPage = () => {
           </Link>
         </p>
       </div>
-      {error && <p className='text-red-500'>Something went wrong</p>}
+      {error && (
+        <p className='text-red-500'>
+          {error ? error.message : 'Something went wrong'}
+        </p>
+      )}
     </div>
   );
 };
