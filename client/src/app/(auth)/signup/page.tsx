@@ -1,8 +1,10 @@
 'use client';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { routes } from '@/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import { routes } from '@/routes';
+import GoogleAuth from '@/components/GoogleAuth';
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({});
@@ -76,6 +78,7 @@ const SignUpPage = () => {
         >
           {loading ? 'Loading...' : 'Sign up'}
         </button>
+        <GoogleAuth />
       </form>
       <div className='mt-5'>
         <p>
