@@ -2,11 +2,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useRouter } from 'next/navigation';
+
 import { routes } from '@/routes';
 import { logInLoading, logInSuccess, logInError } from '@/store/user/slice';
 import { userLoadingSelector, userErrorSelector } from '@/store/user/selectors';
+import GoogleAuth from '@/components/GoogleAuth';
 
 const LogInPage = () => {
   const [formData, setFormData] = useState({});
@@ -73,6 +74,7 @@ const LogInPage = () => {
         >
           {loading ? 'Loading...' : 'LogIn'}
         </button>
+        <GoogleAuth />
       </form>
       <div className='mt-5'>
         <p>

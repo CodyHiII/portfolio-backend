@@ -1,5 +1,5 @@
 'use client';
-import Header from '@/components/Header.tsx';
+import Header from '@/components/Header';
 import { currentUserSelector } from '@/store/user/selectors';
 import { useSelector } from 'react-redux';
 
