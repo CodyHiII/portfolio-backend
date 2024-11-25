@@ -4,7 +4,7 @@ type ErrorResponse = {
 };
 
 type UserSliceType = {
-  currentUser: [] | any;
+  currentUser: [] | null;
   loading: boolean;
   error: ErrorResponse | null;
 };

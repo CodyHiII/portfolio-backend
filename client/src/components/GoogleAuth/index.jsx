@@ -1,10 +1,8 @@
 import app from '@/firebase';
 import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
 
 import { logInSuccess } from '@/store/user/slice';
-import { routes } from '@/routes';
 
 const GoogleAuth = () => {
   const dispatch = useDispatch();
@@ -28,6 +26,10 @@ const GoogleAuth = () => {
         }),
       });
       const data = await res.json();
+      if (data.success === false) {
+        dispatch(logInError(data));
+        return;
+      }
       dispatch(logInSuccess(data));
     } catch (error) {
       console.log('could not login with google');
