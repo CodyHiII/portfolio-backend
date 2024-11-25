@@ -13,10 +13,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`${poppins.variable}`}
-      style={{ fontFamily: 'var(--primary-font)' }}
-    >
+    <div>
       <Header />
       {children}
     </div>

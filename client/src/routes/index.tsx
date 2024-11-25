@@ -18,9 +18,9 @@ export const routesConfig = [
   {
     title: 'Profile',
     url: routes.profile,
-    showInMenu: true,
+    showInMenu: false,
     showInFooter: false,
-    isProtected: false,
+    isProtected: true,
     openInNewTab: false,
   },
   {
@@ -34,7 +34,7 @@ export const routesConfig = [
   {
     title: 'LogIn',
     url: routes.login,
-    showInMenu: true,
+    showInMenu: false,
     showInFooter: false,
     isProtected: false,
     openInNewTab: false,
@@ -42,7 +42,7 @@ export const routesConfig = [
   {
     title: 'SignUp',
     url: routes.signup,
-    showInMenu: true,
+    showInMenu: false,
     showInFooter: false,
     isProtected: false,
     openInNewTab: false,
