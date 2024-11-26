@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
@@ -19,6 +20,7 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.listen(process.env.NEXT_PUBLIC_SERVER_PORT, () => {
   console.log('Server started on:', process.env.NEXT_PUBLIC_SERVER_PORT);
