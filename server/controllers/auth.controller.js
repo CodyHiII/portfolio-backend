@@ -43,3 +43,66 @@ export const login = async (req, res, next) => {
     next(error);
   }
 };
+
+export const google = async (req, res, next) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.NEXT_PUBLIC_JWT_SECRET
+      );
+      const expiryDate = new Date(Date.now() + 3600000 * 24);
+
+      const { password: hashedPassword, ...rest } = user._doc;
+
+      res
+        .cookie('access_token', token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    } else {
+      const generatePassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = bcryptjs.hashSync(generatePassword, 10);
+
+      const createGoogleUserName =
+        req.body.name.split(' ').join('').toLowerCase() +
+        Math.random().toString(36).slice(-4);
+
+      const newUser = new User({
+        username: createGoogleUserName,
+        email,
+        password: hashedPassword,
+        profilePicture: req.body.photo,
+      });
+
+      await newUser.save();
+
+      const token = jwt.sign(
+        { id: newUser._id },
+        process.env.NEXT_PUBLIC_JWT_SECRET
+      );
+      const { password: hashedPassword2, ...rest } = newUser._doc;
+      const expiryDate = new Date(Date.now() + 3600000 * 24);
+
+      res
+        .cookie('access_token', token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie('access_token').status(200).json('Logout success');
+};

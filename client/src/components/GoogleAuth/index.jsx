@@ -3,9 +3,12 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 
 import { logInSuccess } from '@/store/user/slice';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/routes';
 
 const GoogleAuth = () => {
   const dispatch = useDispatch();
+  const { push } = useRouter();
 
   const handleGoogleClick = async () => {
     try {
@@ -31,6 +34,7 @@ const GoogleAuth = () => {
         return;
       }
       dispatch(logInSuccess(data));
+      push(routes.home);
     } catch (error) {
       console.log('could not login with google');
     }
